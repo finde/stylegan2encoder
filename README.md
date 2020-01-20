@@ -9,30 +9,35 @@ This is a port of [Puzer/stylegan-encoder](https://github.com/Puzer/stylegan-enc
 ![Teaser image](./docs/stylegan2encoder-teaser-1024x256.png)
 
 ### Generating latent representation of your images, using the original encoder
-`pip install tensorflow-gpu==1.14`
 
-`git clone https://github.com/rolux/stylegan2encoder.git`
+```
+git clone https://github.com/finde/stylegan2encoder.git
+cd stylegan2encoder
+docker build -t "stylegan2encoder:latest" .
+docker run -u (id -u):(id -g) -v (pwd):/project -v (pwd)/../data:/data -it stylegan2encoder:latest bash
+```
 
-`cd stylegan2encoder`
+_Note: here I have the `data` folder in the parent directory contains `raw_images` folder with all images you want to encode._
 
 You can generate latent representations of your own images using two scripts:
 
 1) Extract and align faces from images
 
-`python align_images.py raw_images/ aligned_images/`
+    `python align_images.py raw_images/ aligned_images/`
+
+    or 
+
+    `./1_align.sh`
 
 2) Find latent representation of aligned images
 
-`python encode_images.py aligned_images/ generated_images/ latent_representations/`
+    `python project_images.py aligned_images/ generated_images/`
 
-### Generating latent representation of your images, using the modified projector
-Replace step 2 with:
+    or
 
-`python project_images.py aligned_images/ generated_images/`
+    `./2_alt_encode_with_projector.sh`
 
-This is usually preferable. It also allows you to render a video of the optimization process. To see all available options, type:
-
-`python project_images.py -h`
+============================================
  
 ## Original Readme
 ![Teaser image](./docs/stylegan2-teaser-1024x256.png)
